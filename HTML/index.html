@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <header>
+    <h1>🚗 Workshop Dashboard</h1>
+  </header>
+
+  <main>
+    <div class="dashboard-container">
+      <div class="card" onclick="goToPage('products.html')">
+        <h2>📦 Products</h2>
+        <p>Manage all products (Add, Edit, Delete, Search)</p>
+      </div>
+
+      <div class="card" onclick="goToPage('bill.html')">
+        <h2>🧾 Bill</h2>
+        <p>Create & print customer bills</p>
+      </div>
+
+      <div class="card" onclick="goToPage('report.html')">
+        <h2>📊 Report</h2>
+        <p>View sales, profit & revenue reports</p>
+      </div>
+
+      <div class="card" onclick="goToPage('loan.html')">
+        <h2>💰 Loan</h2>
+        <p>Track customer loans & payments</p>
+      </div>
+
+      <div class="card" onclick="goToPage('withdraw.html')">
+        <h2>🏦 Withdraw</h2>
+        <p>Track shop expenses & available cash</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

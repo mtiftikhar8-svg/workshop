@@ -1,0 +1,584 @@
+ /* ========== GLOBAL STYLES ==========
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  color: #333;
+  padding-bottom: 50px;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c3e50;
+  color: white;
+  padding: 15px 30px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.navbar h2 {
+  font-size: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  background: #3498db;
+}
+
+
+.totals {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
+  padding: 15px;
+  background: #ecf0f1;
+  border-radius: 12px;
+  max-width: 900px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.totals h3 {
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+
+.form-section {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 15px;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52,152,219,0.3);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+#saveBtn {
+  background: #27ae60;
+  color: white;
+}
+
+#saveBtn:hover {
+  background: #219150;
+}
+
+#cancelBtn {
+  background: #e74c3c;
+  color: white;
+}
+
+#cancelBtn:hover {
+  background: #c0392b;
+}
+
+
+.list-section {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.list-section h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+
+#searchInput {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+#searchInput:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52,152,219,0.3);
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+thead {
+  background: #2c3e50;
+  color: white;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: #f1f1f1;
+}
+
+tbody td {
+  padding: 12px;
+}
+
+
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+
+.edit-btn {
+  background: #2400a6;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #2980b9;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .totals {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+  }
+}  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ========== GLOBAL STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  color: #333;
+  padding-bottom: 50px;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c3e50;
+  color: white;
+  padding: 15px 30px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.navbar h2 {
+  font-size: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  background: #3498db;
+}
+
+/* ========== TOTALS SECTION ========== */
+.totals {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
+  padding: 15px;
+  background: #ecf0f1;
+  border-radius: 12px;
+  max-width: 900px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.totals h3 {
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+/* ========== FORM SECTION ========== */
+.form-section {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.form-section h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 15px;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52,152,219,0.3);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+#saveBtn {
+  background: #27ae60;
+  color: white;
+}
+
+#saveBtn:hover {
+  background: #219150;
+}
+
+#cancelBtn {
+  background: #e74c3c;
+  color: white;
+}
+
+#cancelBtn:hover {
+  background: #c0392b;
+}
+
+/* ========== LIST SECTION (TABLE) ========== */
+.list-section {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.list-section h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+/* Search Bar */
+#searchInput {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+#searchInput:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 4px rgba(52,152,219,0.3);
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+thead {
+  background: #2c3e50;
+  color: white;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: #f1f1f1;
+}
+
+tbody td {
+  padding: 12px;
+}
+
+/* Actions */
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: 0.3s;
+  border: none;
+}
+
+.edit-btn {
+  background: #3498db !important;  /* ✅ Blue */
+  color: white !important;
+}
+
+.edit-btn:hover {
+  background: #2980b9 !important;
+}
+
+.delete-btn {
+  background: #e74c3c !important; /* ✅ Red */
+  color: white !important;
+}
+
+.delete-btn:hover {
+  background: #c0392b !important;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .totals {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #333;
+  }
+}

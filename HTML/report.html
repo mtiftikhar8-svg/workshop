@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report - Shop Management</title>
+  <link rel="stylesheet" href="../css/report.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🛒 My Shop</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="bill.html">Bill</a></li>
+      <li><a href="report.html" class="active">Report</a></li>
+      <li><a href="loan.html">Loan</a></li>
+      <li><a href="withdraw.html">Withdraw</a></li>
+    </ul>
+  </nav>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- Summary Cards -->
+    <div class="summary">
+      <div class="card">
+        <h3>Today's Revenue</h3>
+        <p id="todayRevenue">0</p>
+      </div>
+      <div class="card">
+        <h3>Today's Profit</h3>
+        <p id="todayProfit">0</p>
+      </div>
+      <div class="card">
+        <h3>Total Profit</h3>
+        <p id="totalProfit">0</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-box">
+        <label for="date">Search by Date:</label>
+        <input type="date" id="date">
+        <button onclick="searchByDate()">Search</button>
+      </div>
+
+      <div class="filter-box">
+        <label for="month">Search by Month:</label>
+        <select id="month">
+          <option value="">Select Month</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <select id="year">
+          <option value="">Select Year</option>
+          <option>2024</option>
+          <option>2025</option>
+          <option>2026</option>
+        </select>
+        <button onclick="searchByMonth()">Search</button>
+      </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="report-table">
+      <h3>Revenue History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Revenue</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+        <tbody id="reportBody">
+          <!-- Data dynamically add hogi -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cash Section -->
+    <div class="cash-section">
+      <h3>Cash in Hand</h3>
+      <p id="cashInHand">0</p>
+    </div>
+
+  </div>
+
+  <script src="../js/report.js"></script>
+</body>
+</html>

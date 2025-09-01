@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products</title>
+  <link rel="stylesheet" href="../css/products.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h2>🚗 Car Shop Management</h2>
+    <ul>
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="bill.html">Bill</a></li>
+      <li><a href="loan.html">Loan</a></li>
+      <li><a href="withdraw.html">Withdraw</a></li>
+      <li><a href="report.html">Reports</a></li>
+    </ul>
+  </nav>
+
+  <!-- Totals -->
+  <section class="totals">
+    <h3>Total Purchase Price: <span id="totalPurchase">0</span></h3>
+    <h3>Total Sale Price: <span id="totalSale">0</span></h3>
+  </section>
+
+  <!-- Add Product Form -->
+<section class="form-section">
+  <h3 id="formTitle">➕ Add Product</h3>
+  <form id="productForm" class="form-grid">
+    <input type="hidden" id="productId"/>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Product Name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Qty</label>
+      <input type="number" id="quantity" placeholder="0" required />
+    </div>
+
+    <div class="form-group">
+      <label for="purchase_price">Purchase</label>
+      <input type="number" id="purchase_price" placeholder="0" required />
+    </div>
+
+    <div class="form-group">
+      <label for="sale_price">Sale</label>
+      <input type="number" id="sale_price" placeholder="0" required />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" id="saveBtn">Save</button>
+      <button type="button" id="cancelBtn" style="display:none;">Cancel</button>
+    </div>
+  </form>
+</section>
+
+
+  <!-- Product List -->
+  <section class="list-section">
+    <h3>📦 Products List</h3>
+
+    <!-- 🔍 Search Bar -->
+    <input type="text" id="searchInput" placeholder="Search by product name..." />
+
+    <table id="productsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Purchase Price</th>
+          <th>Sale Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Products will be loaded here -->
+      </tbody>
+    </table>
+  </section>
+
+  <script src="../js/products.js"></script>
+</body>
+</html>

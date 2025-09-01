@@ -1,0 +1,83 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ✅ Navbar */
+.navbar {
+  display: flex;
+  background: #2c3e50;
+  padding: 10px;
+}
+.navbar a {
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+.navbar a.active {
+  background: #1abc9c;
+  border-radius: 5px;
+}
+
+.container {
+  padding: 20px;
+}
+
+.loan-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.loan-box {
+  flex: 1;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-width: 350px;
+}
+
+form {
+  margin-bottom: 15px;
+}
+form input {
+  padding: 8px;
+  margin: 5px;
+}
+form button {
+  background: #1abc9c;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+table th {
+  background: #1abc9c;
+  color: white;
+}
+
+.loan-summary {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.loan-summary h3 {
+  margin-top: 10px;
+  font-weight: bold;
+}

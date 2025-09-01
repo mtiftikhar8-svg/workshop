@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Management</title>
+  <link rel="stylesheet" href="../css/loan.css">
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <a href="index.html">Dashboard</a>
+    <a href="products.html">Products</a>
+    <a href="bill.html">Bill</a>
+    <a href="report.html">Report</a>
+    <a href="loan.html" class="active">Loan</a>
+    <a href="withdraw.html">Withdraw</a>
+  </nav>
+
+  <div class="container">
+    <h1>Loan Management</h1>
+    <div class="loan-sections">
+      <!-- ✅ Customer Loans -->
+      <div class="loan-box">
+        <h2>Customer Loans (They Owe Me)</h2>
+        <form id="customerLoanForm">
+          <input type="text" id="customerName" placeholder="Customer Name" required>
+          <input type="number" id="customerAmount" placeholder="Amount" required>
+          <input type="text" id="customerReceivedBy" placeholder="Received By (optional)">
+          <button type="submit">Add Loan</button>
+        </form>
+        <table id="customerLoanTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Received By</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- ✅ My Loans -->
+      <div class="loan-box">
+        <h2>My Loans (I Owe)</h2>
+        <form id="myLoanForm">
+          <input type="text" id="myLoanName" placeholder="Lender Name" required>
+          <input type="number" id="myLoanAmount" placeholder="Amount" required>
+          <input type="text" id="myLoanReceivedBy" placeholder="Received By (optional)">
+          <button type="submit">Add Loan</button>
+        </form>
+        <table id="myLoanTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Received By</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ✅ Summary Section -->
+    <div class="loan-summary">
+      <h2>Loan Summary</h2>
+      <p id="customerTotal">Total Customers Owe Me: 0</p>
+      <p id="myTotal">Total I Owe: 0</p>
+      <h3 id="loanStatus">Status: Balanced</h3>
+    </div>
+  </div>
+
+  <script src="../js/loan.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f9;
+  color: #333;
+}
+
+.navbar {
+  display: flex;
+  background: #2c3e50;
+  padding: 10px;
+}
+.navbar a {
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+.navbar a.active {
+  background: #1abc9c;
+  border-radius: 5px;
+}
+
+.container {
+  padding: 20px;
+}
+
+form {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+form input, form button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+form button {
+  background: #1abc9c;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+form button:hover {
+  background: #16a085;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background: #1abc9c;
+  color: white;
+}
+
+.withdraw-summary {
+  margin-top: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-weight: bold;
+}
+
+button.deleteBtn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

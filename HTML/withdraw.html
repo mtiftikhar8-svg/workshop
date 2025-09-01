@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdraw / Expenses</title>
+  <link rel="stylesheet" href="../css/withdraw.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html">Dashboard</a>
+    <a href="products.html">Products</a>
+    <a href="bill.html">Bill</a>
+    <a href="report.html">Report</a>
+    <a href="loan.html">Loan</a>
+    <a href="withdraw.html" class="active">Withdraw</a>
+  </nav>
+
+  <div class="container">
+    <h1>Withdraw / Expenses</h1>
+
+    <form id="withdrawForm">
+      <input type="text" id="withdrawName" placeholder="Expense Name" required>
+      <input type="number" id="withdrawAmount" placeholder="Amount" required>
+      <input type="date" id="withdrawDate" required>
+      <button type="submit">Add Expense</button>
+    </form>
+
+    <table id="withdrawTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="withdraw-summary">
+      <p id="totalWithdrawn">Total Withdrawn: 0</p>
+      <p id="cashBalance">Cash Balance: 0</p>
+    </div>
+  </div>
+
+  <script src="../js/withdraw.js"></script>
+</body>
+</html>

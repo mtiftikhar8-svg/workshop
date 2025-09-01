@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Page</title>
+  <link rel="stylesheet" href="../CSS/bill.css">
+</head>
+<body>
+  <!-- Navbar -->
+   <!-- Navbar -->
+  <nav class="navbar">
+    <h2>🚗 Car Shop Management</h2>
+    <ul>
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="products.html" >Products</a></li>
+      <li><a href="bill.html" class="active">Bill</a></li>
+      <li><a href="loan.html">Loan</a></li>
+      <li><a href="withdraw.html">Withdraw</a></li>
+      <li><a href="report.html">Reports</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Search bar -->
+    <div class="search-bar">
+      <input type="text" id="searchProduct" placeholder="Search products...">
+    </div>
+
+    <div class="container">
+      <!-- Left: Products -->
+      <div class="products-section">
+        <h2>Products</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Stock</th>
+              <th>Sale Price</th>
+              <th>Add</th>
+            </tr>
+          </thead>
+          <tbody id="productList">
+            <!-- JS will fill products -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: Cart -->
+      <div class="cart-section">
+        <h2>Cart</h2>
+        <div class="customer-info">
+          <label for="customerName">Customer Name:</label>
+          <input type="text" id="customerName" placeholder="Enter customer name">
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Sale Price</th>
+              <th>Total</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody id="cartBody">
+            <!-- JS will fill cart -->
+          </tbody>
+        </table>
+        <div class="subtotal">
+          Subtotal: Rs.<span id="cartTotal">0</span>
+        </div>
+        <button id="printBill">Print Bill</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../JS/bill.js"></script>
+</body>
+</html>
