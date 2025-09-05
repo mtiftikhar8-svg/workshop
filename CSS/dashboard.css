@@ -1,4 +1,4 @@
-/* General reset */
+/* General reset
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@ body {
   color: #333;
 }
 
-/* Header */
+
 header {
   background: #1a73e8;
   color: white;
@@ -29,7 +29,7 @@ header h1 {
   }
 }
 
-/* Dashboard container */
+
 .dashboard-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -37,7 +37,6 @@ header h1 {
   padding: 30px;
 }
 
-/* Card styles */
 .card {
   background: white;
   padding: 20px;
@@ -64,7 +63,7 @@ header h1 {
   color: #555;
 }
 
-/* Responsive tweaks */
+
 @media (max-width: 600px) {
   .dashboard-container {
     grid-template-columns: 1fr;
@@ -82,4 +81,103 @@ header h1 {
   .card p {
     font-size: 13px;
   }
+} */
+
+
+
+
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* Header */
+header {
+  background: #1e293b;
+  color: #fff;
+  padding: 25px 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+header h1 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+@media (min-width: 768px) {
+  header h1 {
+    font-size: 34px;
+  }
+}
+
+/* Dashboard container */
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 30px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* Card styles */
+.card {
+  background: rgba(30, 41, 59, 0.9); /* glassmorphism */
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 22px rgba(59,130,246,0.5);
+  background: rgba(37, 99, 235, 0.2);
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 15px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 13px;
+  }
+}
+

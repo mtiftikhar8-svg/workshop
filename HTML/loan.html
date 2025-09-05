@@ -9,13 +9,23 @@
 <body>
   <!-- ✅ Navbar -->
   <nav class="navbar">
-    <a href="index.html">Dashboard</a>
-    <a href="products.html">Products</a>
-    <a href="bill.html">Bill</a>
-    <a href="report.html">Report</a>
-    <a href="loan.html" class="active">Loan</a>
-    <a href="withdraw.html">Withdraw</a>
-  </nav>
+  <h2>🚗 Car Shop Management</h2>
+
+  <div class="nav-toggle" onclick="document.querySelector('.navbar ul').classList.toggle('show')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul>
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="bill.html">Bill</a></li>
+    <li><a href="report.html">Report</a></li>
+    <li><a href="loan.html" class="active">Loan</a></li>
+    <li><a href="withdraw.html">Withdraw</a></li>
+  </ul>
+</nav>
 
   <div class="container">
     <h1>Loan Management</h1>

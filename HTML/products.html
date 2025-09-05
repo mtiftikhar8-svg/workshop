@@ -8,17 +8,24 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar">
-    <h2>🚗 Car Shop Management</h2>
-    <ul>
-      <li><a href="index.html">Dashboard</a></li>
-      <li><a href="products.html" class="active">Products</a></li>
-      <li><a href="bill.html">Bill</a></li>
-      <li><a href="loan.html">Loan</a></li>
-      <li><a href="withdraw.html">Withdraw</a></li>
-      <li><a href="report.html">Reports</a></li>
-    </ul>
-  </nav>
+ <nav class="navbar">
+  <h2>🚗 Car Shop Management</h2>
+
+  <div class="nav-toggle" onclick="document.querySelector('.navbar ul').classList.toggle('show')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul>
+    <li><a href="index.html">Dashboard</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="bill.html">Bill</a></li>
+    <li><a href="report.html">Report</a></li>
+    <li><a href="loan.html">Loan</a></li>
+    <li><a href="withdraw.html">Withdraw</a></li>
+  </ul>
+</nav>
 
   <!-- Totals -->
   <section class="totals">
