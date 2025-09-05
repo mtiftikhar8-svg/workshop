@@ -175,33 +175,44 @@ document.getElementById("printBill").addEventListener("click", async () => {
   win.document.close();
   win.print();
 
-  // Record sales and update stock
+  // Record sales and update stock with error handling
+  let allSuccess = true;
   for (const item of cart) {
-    // Decrease stock in backend when sale is finalized
-    await fetch(`${API_PRODUCTS}/${item.id}/decrease`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ quantity: item.quantity }),
-    });
+    try {
+      // Decrease stock in backend when sale is finalized
+      const stockRes = await fetch(`${API_PRODUCTS}/${item.id}/decrease`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity: item.quantity }),
+      });
+      if (!stockRes.ok) throw new Error("Failed to update stock for " + item.name);
 
-    // Record the sale
-    await fetch(API_SALES, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        product_id: item.id,
-        quantity: item.quantity,
-        sale_price: item.sale_price,
-        date: date,
-      }),
-    });
+      // Record the sale
+      const saleRes = await fetch(API_SALES, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          product_id: item.id,
+          quantity: item.quantity,
+          sale_price: item.sale_price,
+          date: date,
+        }),
+      });
+      if (!saleRes.ok) throw new Error("Failed to record sale for " + item.name);
+    } catch (err) {
+      allSuccess = false;
+      console.error(err);
+      alert("Error: " + err.message);
+    }
   }
 
-  // Clear cart after print
-  cart = [];
-  renderCart();
-  // Reload products from backend to get updated stock quantities
-  await loadBillProducts();
+  if (allSuccess) {
+    cart = [];
+    renderCart();
+    await loadBillProducts();
+  } else {
+    alert("Some sales or stock updates failed. Please check and retry.");
+  }
 });
 
 // Initial load

@@ -20,12 +20,14 @@ async function loadLoans() {
       <td><button class="deleteBtn">Delete</button></td>
     `;
 
+    // ✅ Delete button
     row.querySelector(".deleteBtn").addEventListener("click", async () => {
       await fetch(`http://localhost:3002/api/loan/${loan.id}`, { method: "DELETE" });
       loadLoans();
     });
 
-    if(loan.type === "customer") {
+    // ✅ Append to correct table
+    if (loan.type === "customer") {
       customerTbody.appendChild(row);
       customerTotal += parseFloat(loan.amount);
     } else {
@@ -34,14 +36,18 @@ async function loadLoans() {
     }
   });
 
+  // ✅ Update totals
   document.getElementById("customerTotal").innerText = `Total Customers Owe Me: ${customerTotal}`;
   document.getElementById("myTotal").innerText = `Total I Owe: ${myTotal}`;
+
+  // ✅ Update net status
   const net = customerTotal - myTotal;
   const statusEl = document.getElementById("loanStatus");
-  if(net > 0) {
+
+  if (net > 0) {
     statusEl.innerText = `Status: You are in Profit (Net ${net})`;
     statusEl.style.color = "green";
-  } else if(net < 0) {
+  } else if (net < 0) {
     statusEl.innerText = `Status: You are in Loss (Net ${net})`;
     statusEl.style.color = "red";
   } else {
@@ -50,12 +56,12 @@ async function loadLoans() {
   }
 }
 
-// Add loan
+// ✅ Add customer loan
 document.getElementById("customerLoanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = document.getElementById("loanName").value;
-  const amount = parseFloat(document.getElementById("loanAmount").value);
-  const received_by = document.getElementById("loanReceivedBy").value;
+  const name = document.getElementById("customerName").value;
+  const amount = parseFloat(document.getElementById("customerAmount").value);
+  const received_by = document.getElementById("customerReceivedBy").value;
   const date = new Date().toISOString().split('T')[0];
 
   await fetch("http://localhost:3002/api/loan", {
@@ -68,6 +74,7 @@ document.getElementById("customerLoanForm").addEventListener("submit", async (e)
   loadLoans();
 });
 
+// ✅ Add my loan
 document.getElementById("myLoanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const name = document.getElementById("myLoanName").value;
@@ -85,5 +92,5 @@ document.getElementById("myLoanForm").addEventListener("submit", async (e) => {
   loadLoans();
 });
 
-// Initial load
+// ✅ Initial load
 loadLoans();

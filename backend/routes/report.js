@@ -1,12 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('../db');
+const db = require("../db");
 
-// ✅ Daily report (YYYY-MM-DD format)
+// ================= DAILY REPORT =================
 router.get("/daily", (req, res) => {
   let date = req.query.date;
+
+  // Agar date pass na ho to aaj ka date use kare
   if (!date) {
-    // today ko YYYY-MM-DD format me set karna
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -32,13 +33,13 @@ router.get("/daily", (req, res) => {
   });
 });
 
-// ✅ Monthly report (YYYY-MM)
+// ================= MONTHLY REPORT =================
 router.get("/monthly", (req, res) => {
-  const month = String(req.query.month).padStart(2, '0'); // 01-12
+  const month = String(req.query.month).padStart(2, "0"); // 01-12
   const year = req.query.year;
 
   db.all(`
-    SELECT s.date, s.quantity, s.sale_price, p.purchase_price
+    SELECT s.quantity, s.sale_price, p.purchase_price
     FROM sales s
     JOIN products p ON s.product_id = p.id
     WHERE s.date LIKE ?
@@ -51,11 +52,14 @@ router.get("/monthly", (req, res) => {
       profit += (r.sale_price - r.purchase_price) * r.quantity;
     });
 
-    res.json({ month, year, revenue, profit });
+    // ✅ Sirf ek hi row return karega (total month)
+    res.json([
+      { date: `${year}-${month}`, revenue, profit }
+    ]);
   });
 });
 
-// ✅ Total report
+// ================= TOTAL REPORT =================
 router.get("/total", (req, res) => {
   db.all(`
     SELECT s.quantity, s.sale_price, p.purchase_price
@@ -75,3 +79,4 @@ router.get("/total", (req, res) => {
 });
 
 module.exports = router;
+

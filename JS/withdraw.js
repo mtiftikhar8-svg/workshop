@@ -5,9 +5,9 @@ async function loadWithdraws() {
   const tbody = document.querySelector("#withdrawTable tbody");
   tbody.innerHTML = "";
 
-  let total = 0;
+  let totalWithdrawn = 0;
   withdraws.forEach(w => {
-    total += parseFloat(w.amount);
+    totalWithdrawn += parseFloat(w.amount);
     const row = document.createElement("tr");
     row.innerHTML = `
       <td contenteditable="true">${w.name}</td>
@@ -24,8 +24,20 @@ async function loadWithdraws() {
     tbody.appendChild(row);
   });
 
-  document.getElementById("totalWithdrawn").innerText = `Total Withdrawn: ${total}`;
-  // Cash balance can be calculated with total sales minus total withdraws
+  // ✅ Step 1: Show total withdrawn
+  document.getElementById("totalWithdrawn").innerText = `Total Withdrawn: ${totalWithdrawn}`;
+
+  // ✅ Step 2: Fetch total revenue from sales
+  const salesRes = await fetch("http://localhost:3002/api/sales");
+  const sales = await salesRes.json();
+  let totalRevenue = 0;
+  sales.forEach(s => {
+    totalRevenue += parseFloat(s.revenue || 0);
+  });
+
+  // ✅ Step 3: Calculate cash balance
+  const cashBalance = totalRevenue - totalWithdrawn;
+  document.getElementById("cashBalance").innerText = `Cash Balance: ${cashBalance}`;
 }
 
 document.getElementById("withdrawForm").addEventListener("submit", async (e) => {
