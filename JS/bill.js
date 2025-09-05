@@ -1,8 +1,8 @@
 let products = [];
 let cart = [];
 
-const API_PRODUCTS = "http://localhost:3000/api/products";
-const API_SALES = "http://localhost:3000/api/sales";
+const API_PRODUCTS = "http://localhost:3002/api/products";
+const API_SALES = "http://localhost:3002/api/sales";
 
 // Load products from backend
 async function loadBillProducts() {
@@ -17,14 +17,15 @@ async function loadBillProducts() {
 }
 
 // Render products table
-function renderProducts() {
+function renderProducts(productsToRender = products) {
   const container = document.getElementById("productList");
   container.innerHTML = "";
 
-  products.forEach(p => {
+  productsToRender.forEach((p) => {
     // Calculate available stock
-    const cartItem = cart.find(c => c.id === p.id);
-    const availableStock = p.quantity - (cartItem?.quantity || 0);
+    const cartItem = cart.find((c) => c.id === p.id);
+    const originalProduct = products.find((prod) => prod.id === p.id);
+    const availableStock = originalProduct.quantity - (cartItem?.quantity || 0);
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -32,7 +33,9 @@ function renderProducts() {
       <td>${p.name}</td>
       <td id="stock-${p.id}">${availableStock}</td>
       <td>${p.sale_price}</td>
-      <td><button class="addBtn" ${availableStock <= 0 ? 'disabled' : ''}>Add</button></td>
+      <td><button class="addBtn" ${
+        availableStock <= 0 ? "disabled" : ""
+      }>Add</button></td>
     `;
     container.appendChild(tr);
 
@@ -42,28 +45,17 @@ function renderProducts() {
 
 // Add product to cart
 async function addToCart(product) {
-  const cartItem = cart.find(c => c.id === product.id);
-  const availableStock = product.quantity - (cartItem?.quantity || 0);
+  const cartItem = cart.find((c) => c.id === product.id);
+  const cartQuantity = cartItem?.quantity || 0;
+  const availableStock = product.quantity - cartQuantity;
 
   if (availableStock <= 0) {
     alert("Out of stock!");
     return;
   }
 
-  // Update backend stock
-  const res = await fetch(`${API_PRODUCTS}/${product.id}/decrease`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ quantity: 1 })
-  });
-
-  if (!res.ok) {
-    const err = await res.json();
-    alert(err.error || "Failed to update stock in backend!");
-    return;
-  }
-
-  // Update cart array
+  // Don't update backend stock here - only update when bill is printed
+  // Just update the cart array
   if (cartItem) cartItem.quantity++;
   else cart.push({ ...product, quantity: 1 });
 
@@ -77,7 +69,7 @@ function renderCart() {
   tbody.innerHTML = "";
   let total = 0;
 
-  cart.forEach(item => {
+  cart.forEach((item) => {
     const row = document.createElement("tr");
     const rowTotal = item.quantity * item.sale_price;
     total += rowTotal;
@@ -92,21 +84,15 @@ function renderCart() {
 
     // Remove button
     row.querySelector(".removeBtn").addEventListener("click", async () => {
-      // Restore stock in backend
-      await fetch(`${API_PRODUCTS}/${item.id}/increase`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity: item.quantity })
-      });
-
-      cart = cart.filter(c => c.id !== item.id);
+      // Don't restore stock in backend since we didn't decrease it when adding
+      cart = cart.filter((c) => c.id !== item.id);
       renderCart();
       renderProducts();
     });
 
     // Editable cells
-    row.querySelectorAll("[contenteditable]").forEach(cell => {
-      cell.addEventListener("keydown", e => {
+    row.querySelectorAll("[contenteditable]").forEach((cell) => {
+      cell.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           e.preventDefault();
           const field = cell.dataset.field;
@@ -117,36 +103,21 @@ function renderCart() {
           }
 
           if (field === "quantity") {
-            const diff = newVal - item.quantity;
-            if (diff > 0) {
-              // Increase quantity => decrease stock
-              fetch(`${API_PRODUCTS}/${item.id}/decrease`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ quantity: diff })
-              }).then(async res => {
-                if (res.ok) {
-                  item.quantity = newVal;
-                  renderCart();
-                  renderProducts();
-                } else {
-                  const err = await res.json();
-                  alert(err.error || "Not enough stock!");
-                  renderCart();
-                }
-              });
-            } else if (diff < 0) {
-              // Decrease quantity => increase stock
-              fetch(`${API_PRODUCTS}/${item.id}/increase`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ quantity: -diff })
-              }).then(() => {
-                item.quantity = newVal;
-                renderCart();
-                renderProducts();
-              });
+            const cartQuantity = newVal;
+            const availableStock = products.find(
+              (p) => p.id === item.id
+            ).quantity;
+
+            if (cartQuantity > availableStock) {
+              alert("Not enough stock available!");
+              cell.innerText = item.quantity;
+              return;
             }
+
+            // Don't update backend stock - just update cart quantity
+            item.quantity = newVal;
+            renderCart();
+            renderProducts();
           } else if (field === "sale_price") {
             item.sale_price = newVal;
             renderCart();
@@ -162,9 +133,9 @@ function renderCart() {
 }
 
 // Search products
-document.getElementById("searchProduct").addEventListener("input", e => {
+document.getElementById("searchProduct").addEventListener("input", (e) => {
   const term = e.target.value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+  const filtered = products.filter((p) => p.name.toLowerCase().includes(term));
   renderProducts(filtered);
 });
 
@@ -172,15 +143,18 @@ document.getElementById("searchProduct").addEventListener("input", e => {
 document.getElementById("printBill").addEventListener("click", async () => {
   if (!cart.length) return alert("Cart is empty!");
 
-  const customerName = document.getElementById("customerName").value || "Unknown";
-  const date = new Date().toLocaleDateString();
+  const customerName =
+    document.getElementById("customerName").value || "Unknown";
+  // const date = new Date().toLocaleDateString();
+  const date = new Date().toISOString().split('T')[0];  // YYYY-MM-DD format
+
 
   // Print HTML
   let html = `<h3>Customer: ${customerName}</h3><p>Date: ${date}</p>
               <table border="1" width="100%" cellspacing="0">
               <tr><th>Name</th><th>Qty</th><th>Price</th><th>Total</th></tr>`;
 
-  cart.forEach(item => {
+  cart.forEach((item) => {
     html += `<tr>
       <td>${item.name}</td>
       <td>${item.quantity}</td>
@@ -189,15 +163,28 @@ document.getElementById("printBill").addEventListener("click", async () => {
     </tr>`;
   });
 
-  html += `</table><p>Subtotal: Rs. ${cart.reduce((acc,i)=>acc+i.quantity*i.sale_price,0)}</p>`;
+  html += `</table><p>Subtotal: Rs. ${cart.reduce(
+    (acc, i) => acc + i.quantity * i.sale_price,
+    0
+  )}</p>`;
 
   const win = window.open("", "", "width=600,height=800");
-  win.document.write(`<html><head><title>Bill</title></head><body>${html}</body></html>`);
+    win.document.write(`
+      <html><head><title>Bill</title></head><body>${html}</body></html>
+    `);
   win.document.close();
   win.print();
 
-  // Record sales
+  // Record sales and update stock
   for (const item of cart) {
+    // Decrease stock in backend when sale is finalized
+    await fetch(`${API_PRODUCTS}/${item.id}/decrease`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantity: item.quantity }),
+    });
+
+    // Record the sale
     await fetch(API_SALES, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -205,15 +192,16 @@ document.getElementById("printBill").addEventListener("click", async () => {
         product_id: item.id,
         quantity: item.quantity,
         sale_price: item.sale_price,
-        date: date
-      })
+        date: date,
+      }),
     });
   }
 
   // Clear cart after print
   cart = [];
   renderCart();
-  renderProducts();
+  // Reload products from backend to get updated stock quantities
+  await loadBillProducts();
 });
 
 // Initial load

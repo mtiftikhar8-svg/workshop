@@ -1,5 +1,5 @@
 // ====== CONFIG ======
-const API_BASE = "http://localhost:3000/api/products";
+const API_BASE = "http://localhost:3002/api/products";
 
 // ====== DOM ======
 const productForm = document.getElementById("productForm");

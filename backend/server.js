@@ -20,5 +20,5 @@ app.use("/api/sales", salesRoute);
 app.use("/api/loan", loanRoute);
 app.use("/api/withdraw", withdrawRoute);
 
-const PORT = 3000;
+const PORT = 3002;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

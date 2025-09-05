@@ -1,43 +1,135 @@
-async function loadDailyReport(date) {
-  const url = date ? `http://localhost:3000/api/report/daily?date=${date}` : "http://localhost:3000/api/report/daily";
-  const res = await fetch(url);
-  const data = await res.json();
+// const API_SALES = "http://localhost:3002/api/sales";
 
-  document.getElementById("dailyRevenue").innerText = `Revenue: ${data.revenue}`;
-  document.getElementById("dailyProfit").innerText = `Profit: ${data.profit}`;
-  document.getElementById("reportDate").innerText = `Date: ${data.date}`;
+// // Load today's revenue & profit
+// async function loadTodayReport() {
+//   try {
+//     const res = await fetch(`${API_SALES}/today`);
+//     const data = await res.json();
+//     document.getElementById("todayRevenue").innerText = data.revenue?.toFixed(2) || 0;
+//     document.getElementById("todayProfit").innerText = data.profit?.toFixed(2) || 0;
+//   } catch (err) {
+//     console.error("Failed to load today's report", err);
+//   }
+// }
+
+// // Search by date
+// async function searchByDate() {
+//   const date = document.getElementById("date").value;
+//   if (!date) return alert("Please select a date");
+
+//   const res = await fetch(`${API_SALES}?date=${date}`);
+//   const data = await res.json();
+
+//   const tbody = document.getElementById("reportBody");
+//   tbody.innerHTML = "";
+
+//   data.forEach((row) => {
+//     const tr = document.createElement("tr");
+//     tr.innerHTML = `
+//       <td>${row.date}</td>
+//       <td>${row.revenue.toFixed(2)}</td>
+//       <td>${row.profit.toFixed(2)}</td>
+//     `;
+//     tbody.appendChild(tr);
+//   });
+// }
+
+// // Search by month
+// async function searchByMonth() {
+//   const month = document.getElementById("month").value;
+//   const year = document.getElementById("year").value;
+//   if (!month || !year) return alert("Select month and year");
+
+//   const res = await fetch(`${API_SALES}/monthly?month=${month}&year=${year}`);
+//   const data = await res.json();
+
+//   const tbody = document.getElementById("reportBody");
+//   tbody.innerHTML = `
+//     <tr>
+//       <td>${month}/${year}</td>
+//       <td>${data.revenue?.toFixed(2) || 0}</td>
+//       <td>${data.profit?.toFixed(2) || 0}</td>
+//     </tr>
+//   `;
+// }
+
+// // Initial load
+// loadTodayReport();
+
+
+
+// Load today's revenue & profit
+async function loadTodayReport() {
+  try {
+    const res = await fetch("http://localhost:3002/api/report/daily");
+    const data = await res.json();
+
+    document.getElementById("todayRevenue").innerText = (data.revenue || 0).toFixed(2);
+    document.getElementById("todayProfit").innerText = (data.profit || 0).toFixed(2);
+  } catch (err) {
+    console.error("Error loading today report:", err);
+    alert("Failed to load today's report.");
+  }
 }
 
-async function loadMonthlyReport(month, year) {
-  const res = await fetch(`http://localhost:3000/api/report/monthly?month=${month}&year=${year}`);
-  const data = await res.json();
+// Search report by date
+async function searchByDate() {
+  const date = document.getElementById("date").value;
+  if (!date) return alert("Please select a date");
 
-  document.getElementById("monthlyRevenue").innerText = `Revenue: ${data.revenue}`;
-  document.getElementById("monthlyProfit").innerText = `Profit: ${data.profit}`;
-  document.getElementById("reportMonth").innerText = `Month: ${month}/${year}`;
+  try {
+    const res = await fetch(`http://localhost:3002/api/report/daily?date=${date}`);
+    const data = await res.json();
+
+    if (!data || !data.date) {
+      renderReportTable([]);
+      return;
+    }
+
+    renderReportTable([{ date: data.date, revenue: data.revenue, profit: data.profit }]);
+  } catch (err) {
+    console.error("Error searching by date:", err);
+    alert("Failed to fetch report for the selected date.");
+  }
 }
 
-async function loadTotalReport() {
-  const res = await fetch("http://localhost:3000/api/report/total");
-  const data = await res.json();
+// Search report by month
+async function searchByMonth() {
+  const month = document.getElementById("month").value;
+  const year = document.getElementById("year").value;
+  if (!month || !year) return alert("Please select month and year");
 
-  document.getElementById("totalRevenue").innerText = `Total Revenue: ${data.revenue}`;
-  document.getElementById("totalProfit").innerText = `Total Profit: ${data.profit}`;
+  try {
+    const res = await fetch(`http://localhost:3002/api/report/monthly?month=${month}&year=${year}`);
+    const data = await res.json();
+
+    renderReportTable(data); // ✅ ab hamesha array milega
+  } catch (err) {
+    console.error("Error searching by month:", err);
+    alert("Failed to fetch report for the selected month.");
+  }
 }
 
-// Event listeners for daily/monthly search
-document.getElementById("dailySearchBtn").addEventListener("click", () => {
-  const date = document.getElementById("dailyDate").value;
-  loadDailyReport(date);
-});
+// Render data inside table
+function renderReportTable(rows) {
+  const tbody = document.getElementById("reportBody");
+  tbody.innerHTML = "";
 
-document.getElementById("monthlySearchBtn").addEventListener("click", () => {
-  const month = document.getElementById("monthlyMonth").value;
-  const year = document.getElementById("monthlyYear").value;
-  loadMonthlyReport(month, year);
-});
+  if (!rows || rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="3">No data found</td></tr>`;
+    return;
+  }
+
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row.date}</td>
+      <td>${Number(row.revenue || 0).toFixed(2)}</td>
+      <td>${Number(row.profit || 0).toFixed(2)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
 // Initial load
-loadDailyReport();
-loadMonthlyReport(new Date().getMonth()+1, new Date().getFullYear());
-loadTotalReport();
+loadTodayReport();

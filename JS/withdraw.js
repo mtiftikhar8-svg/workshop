@@ -1,5 +1,5 @@
 async function loadWithdraws() {
-  const res = await fetch("http://localhost:3000/api/withdraw");
+  const res = await fetch("http://localhost:3002/api/withdraw");
   const withdraws = await res.json();
 
   const tbody = document.querySelector("#withdrawTable tbody");
@@ -17,7 +17,7 @@ async function loadWithdraws() {
     `;
 
     row.querySelector(".deleteBtn").addEventListener("click", async () => {
-      await fetch(`http://localhost:3000/api/withdraw/${w.id}`, { method: "DELETE" });
+      await fetch(`http://localhost:3002/api/withdraw/${w.id}`, { method: "DELETE" });
       loadWithdraws();
     });
 
@@ -34,7 +34,7 @@ document.getElementById("withdrawForm").addEventListener("submit", async (e) => 
   const amount = parseFloat(document.getElementById("withdrawAmount").value);
   const date = document.getElementById("withdrawDate").value;
 
-  await fetch("http://localhost:3000/api/withdraw", {
+  await fetch("http://localhost:3002/api/withdraw", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, amount, date })

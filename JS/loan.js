@@ -1,5 +1,5 @@
 async function loadLoans() {
-  const res = await fetch("http://localhost:3000/api/loan");
+  const res = await fetch("http://localhost:3002/api/loan");
   const loans = await res.json();
 
   const customerTbody = document.querySelector("#customerLoanTable tbody");
@@ -21,7 +21,7 @@ async function loadLoans() {
     `;
 
     row.querySelector(".deleteBtn").addEventListener("click", async () => {
-      await fetch(`http://localhost:3000/api/loan/${loan.id}`, { method: "DELETE" });
+      await fetch(`http://localhost:3002/api/loan/${loan.id}`, { method: "DELETE" });
       loadLoans();
     });
 
@@ -58,7 +58,7 @@ document.getElementById("customerLoanForm").addEventListener("submit", async (e)
   const received_by = document.getElementById("loanReceivedBy").value;
   const date = new Date().toISOString().split('T')[0];
 
-  await fetch("http://localhost:3000/api/loan", {
+  await fetch("http://localhost:3002/api/loan", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ type: "customer", name, amount, received_by, date })
@@ -75,7 +75,7 @@ document.getElementById("myLoanForm").addEventListener("submit", async (e) => {
   const received_by = document.getElementById("myLoanReceivedBy").value;
   const date = new Date().toISOString().split('T')[0];
 
-  await fetch("http://localhost:3000/api/loan", {
+  await fetch("http://localhost:3002/api/loan", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ type: "myloan", name, amount, received_by, date })
